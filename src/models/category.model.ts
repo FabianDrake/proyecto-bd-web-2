@@ -1,9 +1,10 @@
 import { Schema, model } from 'mongoose'
 import { Category, CategoryModel } from '../types/category.type'
+import { USER_REFERENCE } from './user.model'
+
+export const CATEGORY_REFERENCE = 'Category'
 
 const Categories = new Schema<Category, CategoryModel>({
-  //Aqui  se definen los campos de la base de datos para el modelo "Categorias"
-  //Nombre
   name: {
     type: String,
     required: true,
@@ -11,13 +12,15 @@ const Categories = new Schema<Category, CategoryModel>({
     index: true,
     trim: true
   },
-  //Descripcion
   description: {
     type: String,
     required: false,
     trim: true
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: USER_REFERENCE
   }
-  //TODO: Meter la categoria del anime
 })
 
-export default model('Category', Categories)
+export default model(CATEGORY_REFERENCE, Categories)
