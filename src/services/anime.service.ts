@@ -103,5 +103,3 @@ class AnimeService {
 }
 
 export default AnimeService
-
-/*paso 3: Definimos la clase que va a contener los metodos para manipular la base de datos*/

@@ -2,7 +2,7 @@ import express, { application } from "express"
 import { Anime } from '../types/anime.type'
 import AnimeService from '../services/anime.service'
 import passport from 'passport'
-import { JwtRequestType } from '../types/user.type'
+import { JwtRequestType, UserRequestType } from '../types/user.type'
 import { ObjectId } from 'mongoose'
 
 const router = express.Router()
@@ -25,6 +25,36 @@ router.post('/',
     //Respuesat de anime creado
     res.status(201).json(newAnime)
 })
+
+router.get('/getTarea2',//Endpoint sin proteccion
+    async (req: UserRequestType, res, next) => {//jala
+        try {
+            if (req.query.name) {
+                const { name } = req.query;
+                const anime = await service.findByName(name as string);
+                res.status(200).json(anime);
+            } else if (req.query.score) {
+                const { score } = req.query;
+                const anime = await service.findByScore(Number(score as string));
+                res.status(200).json(anime);
+            } else if (req.query.id) {
+                const { id } = req.query
+                const animeid = await service.findbyId(id as string)
+                res.status(200).json(animeid)
+
+            } else if (req.query.genere) {
+                const { genere } = req.query
+                const animes = await service.findByGenere(genere as string)
+                res.status(200).json(animes);
+            } else {
+                const animes = await service.findAll();
+                res.status(200).json(animes);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            next(error);
+        }
+    });
 
 router.get('/', 
 passport.authenticate('jwt', { session: false }),
