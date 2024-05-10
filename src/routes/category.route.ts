@@ -21,7 +21,6 @@ router.post(
       category,
       sub as unknown as ObjectId
     )
-
     res.status(201).json(newCategory)
   }
 )

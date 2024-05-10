@@ -11,8 +11,10 @@ import passport from 'passport'
 import './utils/auth'
 
 const { mongoUri, port } = config
+const cors=require('cors');
 
 const app = express()
+app.use(cors());
 app.use(express.json())
 const connectDB = () => {
   mongoose.connect(mongoUri)
